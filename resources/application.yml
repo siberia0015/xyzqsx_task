@@ -1,0 +1,93 @@
+spring:
+  # thymeleaf����
+  thymeleaf:
+    # �رջ���
+    cache: false
+  redis:
+    # 服务器地址
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+    timeout: 10000ms
+    lettuce:
+      pool:
+        max-active: 8
+        max_wait: 10000ms
+        max-idle: 200
+        min-idle: 5
+  # rabbitmq
+  rabbitmq:
+    #服务器
+    host: 127.0.0.1
+    #用户名
+    username: guest
+    #密码
+    password: guest
+    #虚拟主机
+    virtual-host: /
+    #端口
+    port: 5672
+    listener:
+      simple:
+        #消费者最小数量
+        concurrency: 10
+        #消费者最大数量
+        max-concurrency: 10
+        #限制消费者每次只能处理一条消息，处理完在继续下一条消息
+        prefetch: 1
+        #启动是默认启动容器
+        auto-startup: true
+        #被拒绝时重新进入队列
+        default-requeue-rejected: true
+    template:
+      retry:
+        #发布重试，默认false
+        enabled: true
+        #重试时间，默认1000ms
+        initial-interval: 1000ms
+        #重试最大次数，默认3次
+        max-attempts: 3
+        #最大重试间隔时间
+        max-interval: 10000ms
+        #重试的间隔乘数，比如配2。0  第一等10s 第二次等20s 第三次等40s
+        multiplier: 1
+  # ����Դ����
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/xyzqsx_task?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+#    url: jdbc:mysql://localhost:3306/xyzqsx_task?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false
+#    url: jdbc:mysql://112.49.216.234:3306/xyzqsx_task?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://mysql:3306/xyzqsx_task?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false
+    username: root
+    password: 123456
+    hikari:
+      # ���ӳ���
+      pool-name: DateHikariCP
+      # ��С����������
+      minimum-idle: 5
+      # �������Ӵ�����ʱ�䣬Ĭ��600000��10���ӣ�
+      idle-timeout: 180000
+      # �����������Ĭ��10
+      maximum-pool-size: 10
+      # �����ӳط��ص������Զ��ύ
+      auto-commit: true
+      # ���������ʱ�䣬0��ʾ���ô�Ĭ��1800000��30���ӣ�
+      max-lifetime: 1800000
+      # ���ӳ�ʱʱ�䣬Ĭ��30000��30�룩
+      connection-timeout: 30000
+      # ���������Ƿ���õĲ�ѯ���
+      connection-test-query: SELECT 1
+
+
+# MyBatis-plus����
+mybatis-plus:
+  # ����Mapper.xmlӳ���ļ�
+  mapper-locations: classpath*:/mapper/*Mapper.xml
+  # ����MyBatis���ݷ������ͣ�Ĭ�ϱ�����������
+  type-aliases-package: com.yxy.xyzqsx_task.pojo
+
+
+# MyBatis SQL��ӡ�������ӿ����ڵİ�������Mapper.xml���ڵİ�
+logging:
+  level:
+    com.yxy.syzqsx_task.mapper: debug
